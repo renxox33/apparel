@@ -1,6 +1,7 @@
 backend/node_modules
+backend/store
+backend/models
+backend/.env
 apparel/node_modules
 apparel/src/setupProxy.js
 keys
-backend/store
-backend/.env
