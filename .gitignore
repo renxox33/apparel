@@ -3,5 +3,5 @@ backend/models
 backend/store
 backend/.env
 clothin-app/node_modules
-clothin-app/src/setuProxy.js
+clothin-app/src/setupProxy.js
 keys
