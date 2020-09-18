@@ -1,3 +1,7 @@
 backend/node_modules
-clothing-app/node_modules
+backend/models
+backend/store
+backend/.env
+clothin-app/node_modules
+clothin-app/src/setuProxy.js
 keys

@@ -1,0 +1,27 @@
+@media(min-width: 1200px){
+    .sign-up-component form{
+        margin-top: 6%;
+    }
+}
+
+@media(min-width: 768px){
+    @media(max-width:991px){
+        .sign-up-component form{
+            margin-top: 15.2%;
+        }
+    }   
+}
+
+@media(min-width: 992px){
+    @media(max-width:1199px){
+        .sign-up-component form{
+            margin-top: 13%;
+        }
+    }
+}
+
+#password-error{
+    display: block;
+    color: red;
+    font-size: 0.95rem;
+}
