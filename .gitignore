@@ -1,7 +1,6 @@
 backend/node_modules
-backend/models
+apparel/node_modules
+apparel/src/setupProxy.js
+keys
 backend/store
 backend/.env
-clothin-app/node_modules
-clothin-app/src/setupProxy.js
-keys
