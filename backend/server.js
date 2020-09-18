@@ -1,38 +1,34 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const router = require('./router')
+const store = require('./store/store')
 
+const secret = 'hellohelloasdasdasasdddddddddddddd'
 const PORT = process.env.PORT || 5000
-
 const passport = require('passport')
 const cors = require('cors')
-const googlePassport = require('./googleAuth/googleAuth')
 
-googlePassport.initializeGooglePassport(passport)
+app.use(bodyParser.urlencoded({ extended: true }))
 
-// app.use(cors())
+app.use(express.json());
+
+app.use(session({
+    secret: secret,
+    resave: false,
+    saveUninitialized: false
+}))
+
 app.use(passport.initialize())
+app.use(passport.session())
 
-app.use((req,res,next) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', '*')
+app.use(cors({
+    origin: store.MAIN_HOST_URL,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true
+}))
 
-    if(req.method === 'OPTIONS'){
-        req.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, PATCH')
-        return res.status(200).json({})
-    }
-    next()
-})
-  
-
-app.post('/backendRequest', (req, res) => {
-    const { email, password } = req.query
-    res.send({ email, password })
-})
-
-app.get('/sign-in-with-google', passport.authenticate('google', { scope: ['profile'] }))
-
-app.get('/sign-in-with-google/googleAuth', passport.authenticate('google', { failureRedirect: '/backendRequest' }), (req,res) => {
-    console.log('Logged from express')
-})
+app.use('/', router)
 
 app.listen(PORT, () => console.log('Express server is running on port ' + PORT))
