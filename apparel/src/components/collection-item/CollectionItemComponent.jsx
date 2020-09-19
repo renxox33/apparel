@@ -1,4 +1,5 @@
 import React from "react";
+import Button from 'react-bootstrap/Button'
 
 import './collection-item.scss'
 
@@ -16,6 +17,7 @@ const CollectionItemComponent = (props) => {
                 <span className='name'> {props.name} </span>
                 <span className='price'> {[props.price]} </span>
             </div>
+            <Button variant='light'>ADD TO CART</Button>
         </div>
     )
 } 
