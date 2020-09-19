@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './sign-in.css'
 import axios from 'axios'
+import { setCurrentUser } from '../../redux/user/userAction'
+import { connect } from 'react-redux'
 
 class SignInComponent extends React.Component{
 
@@ -20,19 +22,20 @@ class SignInComponent extends React.Component{
     handleSubmit = e => {
         e.preventDefault()
 
-        const data= {
-                email: this.state.email,
-                password: this.state.password
-        }
-
         axios({
             method: 'post',
             url:'/sign-in-with-email',
-            data: data
+            data: {
+                email: this.state.email,
+                password: this.state.password
+            }
         }).then(response => {
             console.log(response.data)
-            if(response.data.authenticated){
-                window.open('http://localhost:3000', '_self')
+            const { authenticated, status, name, id } = response.data
+            if(authenticated && status === 'Success'){
+                const authenticatedUser = { name, id }
+                this.props.setCurrentUser(authenticatedUser)
+                // window.open('http://localhost:3000', '_self')
             }else{
                 const errorMsg = response.data.message
                 document.getElementById('sign-in-error').innerText = errorMsg
@@ -72,4 +75,12 @@ class SignInComponent extends React.Component{
     }
 }
 
-export default SignInComponent
+const mapDispatchToProps = dispatch => {
+    return {
+        setCurrentUser: user => {
+            return dispatch(setCurrentUser(user))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(SignInComponent)

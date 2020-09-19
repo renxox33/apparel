@@ -1,35 +1,15 @@
 import React from "react";
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 import './header.scss'
 import { ReactComponent as Logo } from '../../resources/header-logo/crown.svg'
 
 class HeaderComponent extends React.Component {
 
-    constructor(){
-        super()
-
-        this.state = {
-            isAuthenticated: false
-        }
-    }
-
-    componentDidMount(){
-        axios.post('http://localhost:5000/checkUserLoggedIn').then(response => {
-            console.log(response.data)
-            const { authenticated } = response.data
-            this.setState({ isAuthenticated: authenticated })
-        })
-    }
-
     handleUserLogout = () => {
-        axios.get('/sign-out').then(response => {
-            console.log(response.data)
-            const { authenticated } = response.data
-            this.setState({ isAuthenticated: authenticated })
-        })
-
+        axios.get('/sign-out')
         axios.get('/')
     }
 
@@ -43,7 +23,7 @@ class HeaderComponent extends React.Component {
                     <Link className='option' to='/shop'>
                         SHOP
                     </Link>
-                    { !this.state.isAuthenticated? 
+                    { !this.props.currentUser? 
                     <Link className='option' to='/sign-in'>
                         SIGN IN
                     </Link> :
@@ -59,4 +39,10 @@ class HeaderComponent extends React.Component {
     }
 }
 
-export default HeaderComponent
+const mapStateToProps = state => {
+    return {
+        currentUser: state.user.currentUser
+    }
+}
+
+export default connect(mapStateToProps)(HeaderComponent)
