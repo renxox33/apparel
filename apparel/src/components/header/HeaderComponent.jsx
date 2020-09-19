@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import './header.scss'
 import { ReactComponent as Logo } from '../../resources/header-logo/crown.svg'
+import ShoppingCartComponent from '../shopping-cart/ShoppingCartComponent'
+import ShoppingCartDropdown from '../shopping-cart-dropdown/DropDownComponent'
 
 class HeaderComponent extends React.Component {
 
@@ -33,7 +35,9 @@ class HeaderComponent extends React.Component {
                     <Link className='option' to='/contact'>
                         CONTACT
                     </Link>
+                    <ShoppingCartComponent />
                 </div>
+                {this.props.hidden ? null : <ShoppingCartDropdown />}
             </div>
         )
     }
@@ -41,7 +45,8 @@ class HeaderComponent extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.user.currentUser
+        currentUser: state.user.currentUser,
+        hidden: state.cart.hidden
     }
 }
 

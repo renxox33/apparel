@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './sign-in.css'
 import axios from 'axios'
-import { setCurrentUser } from '../../redux/user/userAction'
+import { setCurrentUser } from '../../redux/user/Actions'
 import { connect } from 'react-redux'
 
 class SignInComponent extends React.Component{
@@ -30,12 +30,10 @@ class SignInComponent extends React.Component{
                 password: this.state.password
             }
         }).then(response => {
-            console.log(response.data)
             const { authenticated, status, name, id } = response.data
             if(authenticated && status === 'Success'){
                 const authenticatedUser = { name, id }
                 this.props.setCurrentUser(authenticatedUser)
-                // window.open('http://localhost:3000', '_self')
             }else{
                 const errorMsg = response.data.message
                 document.getElementById('sign-in-error').innerText = errorMsg

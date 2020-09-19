@@ -12,7 +12,7 @@ class SignOutComponent extends React.Component {
  
         setTimeout(() => {
             window.open('/', '_self')
-        }, 3000)
+        }, 2000)
     }
 
     render(){

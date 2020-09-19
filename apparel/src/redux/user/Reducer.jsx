@@ -1,13 +1,13 @@
-import userActionTypes from './userActionTypes'
+import userActionTypes from './Types'
 
-const initiaState = {
+const initialState = {
     currentUser : null
 }
 
 const userReducer = (state, action) => {
 
     if(state === null || state === undefined){
-        state = initiaState
+        state = initialState
     }
 
     switch(action.type){

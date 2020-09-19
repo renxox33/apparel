@@ -112,6 +112,7 @@ router.post('/checkUserLoggedIn', (req, res) => {
 router.get('/sign-out', (req, res) => {
     req.logOut()
     isAuthenticated = false
+    user = null
     res.json({ authenticated: isAuthenticated })
 })
 
