@@ -11,7 +11,7 @@ const CollectionPreviewComponent = (props) => {
             <div className='preview'>
                 {props.items.map((item, index) => {
                     if(index<4){
-                        return <CollectionItemComponent key={item.id} linkUrl={item.imageUrl} name={item.name} price={item.price} />
+                        return <CollectionItemComponent key={item.id} linkUrl={item.imageUrl} name={item.name} price={item.price} id={item.id} />
                     }else{
                         return null
                     }
