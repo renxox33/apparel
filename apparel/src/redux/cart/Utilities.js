@@ -1,4 +1,5 @@
 export const addItemToCart = (cart, itemToAdd) => {
+    console.log(itemToAdd)
 
     //check if itemToAdd already exists in cart
     const alreadyExists = cart.find(item => item.id === itemToAdd.id)
@@ -8,6 +9,10 @@ export const addItemToCart = (cart, itemToAdd) => {
                 return {
                     ...item,
                     quantity: item.quantity + 1
+                }
+            } else{
+                return {
+                    ...item
                 }
             }
         })
