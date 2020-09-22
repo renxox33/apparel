@@ -6,11 +6,12 @@ import {connect} from 'react-redux'
 import './shopping-cart.scss'
 
 
-const ShoppingCartComponent = ({ setCartHiddenValue }) => {
+const ShoppingCartComponent = (props) => {
+
     return(
-        <div className='cart-icon' onClick={setCartHiddenValue}>
+        <div className='cart-icon' onClick={props.setCartHiddenValue}>
             <ShoppingBag className='shopping-icon'/>
-            <span className='item-count'>0</span>
+            <span className='item-count'>{props.numberOfItemsInCart}</span>
         </div>
     )
 }
@@ -21,4 +22,10 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(ShoppingCartComponent)
+const mapStateToProps = state => {
+    return {
+        numberOfItemsInCart: state.cart.cart.reduce((accumulator, cartItem) => accumulator + cartItem.quantity, 0 )
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartComponent)

@@ -9,6 +9,7 @@ import ShopComponent from './pages/shop/ShopComponent'
 import HeaderComponent from './components/header/HeaderComponent'
 import SignInSignUp from './pages/sign-in-up/SignInUp'
 import SignOutComponent from './components/sign-out/SignOutComponent'
+import CheckoutComponent from './pages/checkout/CheckoutComponent'
 import { setCurrentUser } from './redux/user/Actions'
 
 class App extends React.Component {
@@ -31,6 +32,7 @@ class App extends React.Component {
         <Route exact path='/shop' component={ShopComponent} />
         <Route exact path='/sign-in' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInSignUp />)} /> 
         <Route exact path='/sign-out' component={SignOutComponent} /> 
+        <Route exact path='/checkout' component={CheckoutComponent} />
       </div>
     )
   }

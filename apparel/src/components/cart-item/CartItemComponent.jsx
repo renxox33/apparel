@@ -4,8 +4,6 @@ import './cart-item.scss'
 
 const CartItemComponent = (props) => {
 
-    console.log(props)
-
     return(
         <div className='cart-item'>
             <img src={props.cart.linkUrl} alt={props.cart.name}/>

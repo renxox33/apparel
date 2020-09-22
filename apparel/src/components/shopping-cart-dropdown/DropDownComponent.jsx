@@ -1,8 +1,11 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux'
+import {withRouter} from 'react-router-dom'
+
 
 import CartItemComponent from '../cart-item/CartItemComponent'
+import { setCartHiddenValue } from '../../redux/cart/Actions'
 
 import './dropdown.scss'
 
@@ -14,13 +17,17 @@ const ShoppingCartDropdown = (props) => {
         <div className='cart-dropdown'>
             <div className='cart-items'>
                 {
-                    cartItems? cartItems.map(item => {
-                        console.log(item)
+                    cartItems.length > 0 ? cartItems.map(item => {
                         return <CartItemComponent key={item.id} cart={item} />
-                    }) : null
+                    }) : <span className='empty-message'>Cart is empty</span>
                 }
             </div>
-            <Button variant='dark'> Checkout </Button>
+            <Button variant='dark' onClick={
+                () => {
+                props.history.push('/checkout')
+                props.toggleHidden()
+                }
+            }> Checkout </Button>
         </div>
     )
 }
@@ -31,4 +38,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ShoppingCartDropdown)
+const mapDispatchToProps = dispatch => {
+    return{
+        toggleHidden: () => dispatch(setCartHiddenValue())
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShoppingCartDropdown))
