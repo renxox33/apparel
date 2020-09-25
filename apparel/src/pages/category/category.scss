@@ -1,0 +1,21 @@
+.category-collection {
+    display: flex;
+    flex-direction: column;
+  
+    .title {
+      font-size: 38px;
+      margin: 0 auto 30px;
+      padding: 3% 0 2% 0;
+    }
+  
+    .item-display {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-gap: 10px;
+  
+      & .collection-item {
+          width: 90%;
+        margin-bottom: 30px;
+      }
+    }
+  }

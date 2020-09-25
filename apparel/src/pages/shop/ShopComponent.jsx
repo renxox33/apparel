@@ -1,26 +1,26 @@
 import React from "react";
-import SHOP_DATA from './shopData'
-import CollectionPreviewComponent from '../../components/collection-preview/CollectionPreviewComponent'
+import {Route, withRouter} from 'react-router-dom'
 
-class ShopComponent extends React.Component  {
+import ShoppingOverviewComponent from '../../components/shopping-overview/ShoppingOverviewComponent'
+import CategoryComponent from '../category/CategoryComponent'
+import ShopDataContext from '../../context/shopDataContext'
+import SHOP_DATA from '../../pages/shop/shopData'
 
-    constructor(props){
-        super(props)
 
-        this.state = {
-            shopData: SHOP_DATA
-        }
-    }
+const ShopComponent = ({ match }) =>  {
 
-    render(){
         return(
-            <div>
-                { this.state.shopData.map( category => {
-                    return <CollectionPreviewComponent key={category.id} title={category.title} items={category.items} />
-                } ) }
+            <div className='shop-page'>
+
+                <ShopDataContext.Provider value={SHOP_DATA}>
+                    <Route exact path={`${match.path}`} component={ShoppingOverviewComponent} />   
+                    <Route path={`${match.path}/:category`} component={CategoryComponent} />  
+                </ShopDataContext.Provider>
+
+                               
             </div>
         )
-    }
+    
 }
 
-export default ShopComponent
+export default withRouter(ShopComponent)

@@ -5,5 +5,5 @@ import cartReducer from './cart/Reducer'
 
 export default combineReducers({
     user: userReducer,
-    cart: cartReducer
+    cart: cartReducer,
 })
