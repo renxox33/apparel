@@ -27,11 +27,20 @@
       }
     }
 
-    
       .total {
         margin-top: 30px;
         margin-left: 75%;
         font-size: 36px;
+      }
+
+      button{
+        margin: 5% 50% 0 45%;
+        width: 100px;
+      
+        &:hover{
+          background-color: white;
+          color: black;
+        }
       }
     
   }

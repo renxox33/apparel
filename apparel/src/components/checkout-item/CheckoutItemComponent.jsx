@@ -7,7 +7,6 @@ import './checkout-item.scss'
 
 const CheckoutItemComponent = props => {
     const item = props.item
-    console.log(props)
 
     return(
         <div className='checkout-item'>
