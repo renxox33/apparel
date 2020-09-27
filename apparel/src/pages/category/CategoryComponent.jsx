@@ -5,7 +5,6 @@ import ShopDataContext from '../../context/shopDataContext'
 import CollectionItem from '../../components/collection-item/CollectionItemComponent'
 
 import './category.scss'
-import { Col, Row, Container } from 'react-bootstrap'
 
 class CategoryComponent extends React.Component {
 

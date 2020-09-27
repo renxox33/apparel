@@ -5,15 +5,22 @@ import Button from 'react-bootstrap/Button'
 import './sign-up.css'
 import axios from 'axios'
 
+import ModalComponent from '../Modal/ModalComponent'
+
 class SignUpComponent extends React.Component{
 
     constructor(){
         super()
         this.state = {
+            show: false,
             nickName: '',
             email: '',
             password: ''
         }
+    }
+
+    handleModalClose = () => {
+        this.setState({ show: false })
     }
 
     handleChange = e => {
@@ -34,30 +41,30 @@ class SignUpComponent extends React.Component{
         }
     }
 
-    handleSubmit = e => {
+    handleSubmit = async e => {
         e.preventDefault()
         this.handlePasswordConfirmation()
         if(document.getElementById('password-error').innerText.length === 0 && document.getElementById('confirm-password').value === this.state.password){
-           axios({
-               url:'/register',
-               method:'post',
-               data:{
-                   nickName: this.state.nickName,
-                   email: this.state.email,
-                   password: this.state.password
-               }
-           }).then(response => {
-                console.log(response.data)
-                if(response.data.authenticated){
-                    window.open('http://localhost:3000', '_self')
-                }
-            })
+
+            const data = {
+                nickName: this.state.nickName,
+                email: this.state.email,
+                password: this.state.password
+            }
+
+            const response = await axios.post('/register', data)
+            console.log(response.data)
+
+            if(response.data.registration === 'success'){
+                this.setState({ show: true })
+            }
         }
     }
 
     render(){
         return(
             <div className='sign-up-component'>
+                <ModalComponent show={this.state.show} handleClose={this.handleModalClose} />
                 <h2>I don't have an account.</h2>
                 <span>We'll only need your email and a password.</span>
 

@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const store = require('./store/store')
 
 const passportStrategy = require('./authentication/passportStrategy')
+const { HASH_SALT_ROUNDS } = require('./store/store')
 
 var user
 var isAuthenticated = false
@@ -116,53 +117,39 @@ router.get('/sign-out', (req, res) => {
     res.json({ authenticated: isAuthenticated })
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', async  (req, res) => {
+    
     const { nickName, email, password } = req.body
+    
+    const userFound = await User.findOne({ email: email }).exec()
+    
+    if(userFound !== null){
+        res.json({
+            alreadyRegistered: true,
+            nickName: userFound.nickName
+        })
+    } else{
 
-    User.findOne({ email: email }, async (err, user) => {
-        if(err){
-            res.send(401).send('Error occured in database lookup:', err)
-        } else{
-            if(user){
-                res.json({
-                    alreadyRegistered: true,
-                    nickName: user.nickName
-                })
-            } else{
-                try {
-                    bcrypt.hash(password, store.HASH_SALT_ROUNDS, async (err, hashedPass) => {
-                        if(err){
-                            res.status(500).json({ serverError: true,
-                                                   error: err})
-                        }else{
-                            const newUser = new User({
-                                nickName, email, password: hashedPass
-                            })
-                        
-                            await newUser.save((err, user) => {
-                                if(err){
-                                    console.log('Insert error', err)
-                                    res.status(500).json({
-                                        errorType: 'Insert error',
-                                        error: err
-                                    })
-                                } else{
-                                    res.send(user)
-                                }
-                            })
-                        }
-                    })      
-                } catch (error) {
-                        res.status(500).json({
-                            errorEncountered: true,
-                            error: error
-                })
-               }
-                       
-            }
-            
+        try{
+            const salt = bcrypt.genSaltSync(Number(store.HASH_SALT_ROUNDS))
+            const hashedPassword = await bcrypt.hashSync(password, salt)
+            const newUser = new User({
+                nickName,
+                email,
+                password: hashedPassword
+            })
+
+            const user = await newUser.save()
+            res.json({ 
+                alreadyRegistered: false,
+                registration: 'success',
+                nickName: user.nickName,
+                id: user._id
+             })
+        }catch(error){
+            console.log(error.message)
         }
-    })
+    }
 })
 
 module.exports = router

@@ -1,8 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Link } from 'react-router-dom'
-import Button from 'react-bootstrap/Button'
-import { loadStripe } from '@stripe/stripe-js'
 
 import { removeItemFromCart } from '../../redux/cart/Actions'
 import CheckoutItemComponent from '../../components/checkout-item/CheckoutItemComponent'
@@ -41,7 +38,6 @@ const CheckoutComponent = (props) => {
                     <div className='total'>
                         Total : {props.totalPrice}
                     </div>
-                    {/* <Link to='/checkout'> <Button variant='dark'>Checkout</Button> </Link> */}
                     <PaymentButtonComponent price={props.totalPrice} />
                 </div> : 
                 <div>

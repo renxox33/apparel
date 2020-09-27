@@ -6,7 +6,7 @@ import './sign-out.css'
 class SignOutComponent extends React.Component {
 
     componentDidMount(){
-        axios.get('http://localhost:5000/sign-out').then(response => {
+        axios.get('/sign-out').then(response => {
             console.log(response.data)
         })
  
