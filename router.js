@@ -92,8 +92,9 @@ router.post('/fetchGoogleUserInfo', (req, res) => {
         }
 })
 
-router.get('/sign-out', (req, res) => {
+router.post('/sign-out', (req, res) => {
 
+    console.log('here')
     user = null
     req.logOut()
     res.json({ authenticated: isAuthenticated, user: null })

@@ -9,11 +9,11 @@ import './sign-out.css'
 class SignOutComponent extends React.Component {
 
     componentDidMount(){
-        axios.get('/sign-out').then(response => {
-            this.props.setCurrentUser(null)
-        })
- 
+        
         setTimeout(() => {
+            axios.post('/sign-out').then(response => {
+                this.props.setCurrentUser(null)
+            })
             window.open('/', '_self')
         }, 2000)
     }
