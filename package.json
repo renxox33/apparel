@@ -4,8 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "client": "cd apparel && npm start",
+    "server": "nodemon server.js",
+    "build": "cd apparel && yarn run build",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "start": "node server.js",
+    "heroku-postbuild": "cd apparel && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +18,7 @@
     "@stripe/stripe-js": "^1.9.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

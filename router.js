@@ -6,9 +6,8 @@ const bcrypt = require('bcrypt')
 const store = require('./store/store')
 
 const passportStrategy = require('./authentication/passportStrategy')
-const { HASH_SALT_ROUNDS } = require('./store/store')
 
-var user
+var user = null
 var isAuthenticated = false
 
 mongoose.connect(store.MONGO_CONN_STRING, { 

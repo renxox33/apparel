@@ -10,18 +10,15 @@ const PORT = process.env.PORT || 5000
 const passport = require('passport')
 const cors = require('cors')
 
-const frontEndPath = __dirname.substr(0, __dirname.length - 7);
-
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.json());
 
 if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(frontEndPath, 'apparel/build')))
+    app.use(express.static(path.join(__dirname, 'apparel', 'build')))
 
     app.get('*', (req,res) => {
-
-        res.sendFile(path.join(frontEndPath, 'apparel/build', 'index.html'))
+        res.sendFile(path.join(__dirname, 'apparel', 'build', 'index.html'))
     })
 }
 
