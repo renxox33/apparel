@@ -21,7 +21,6 @@ class App extends React.Component {
       if(authenticated){
         this.props.setCurrentUser({ name, id })
       }
-      this.setState({ isAuthenticated: authenticated })
     })
   }
   render(){

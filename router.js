@@ -46,7 +46,7 @@ router.post('/sign-in-with-email', passport.authenticate('local'), (req, res) =>
             status: 'Failed',
             message: 'Wrong email/password entered'
         }
-        
+
         res.json(response)
     }
 })
@@ -89,7 +89,7 @@ router.get('/sign-in-with-google-failed', (req,res) => {
 
 router.post('/checkUserLoggedIn', (req, res) => {
 
-    console.log(req)
+    console.log(user)
         
         if(isAuthenticated){
             res.json({
@@ -105,9 +105,11 @@ router.post('/checkUserLoggedIn', (req, res) => {
 })
 
 router.get('/sign-out', (req, res) => {
-    req.logOut()
+
     isAuthenticated = false
     user = null
+    console.log(user, isAuthenticated)
+    req.logOut()
     res.json({ authenticated: isAuthenticated })
 })
 
