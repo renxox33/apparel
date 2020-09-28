@@ -7,7 +7,7 @@ class SignOutComponent extends React.Component {
 
     componentDidMount(){
         axios.get('/sign-out').then(response => {
-            const response = response
+            const resp = response
         })
  
         setTimeout(() => {
