@@ -50,7 +50,7 @@ class SignInComponent extends React.Component{
 
     handleGoogleSignIn = e => {
 
-        window.open('https://apparels-web.herokuapp.com/sign-in-with-google', "_self")
+        window.open('http://localhost:5000/sign-in-with-google', "_self")
     }
 
     render(){

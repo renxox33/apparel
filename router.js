@@ -26,14 +26,12 @@ passportStrategy.googleStrategyInit(passport)
 router.post('/sign-in-with-email', passport.authenticate('local'), (req, res) => {
 
     if(req.isAuthenticated()){
-        isAuthenticated = true
-        user = req.user
 
         const response = {
             authenticated: true,
             status: 'Success',
-            name: user.nickName,
-            id: user._id
+            name: req.user.nickName,
+            id: req.user._id
         }    
 
         res.json(response)
@@ -57,25 +55,12 @@ router.get('/sign-in-with-google/googleAuth', passport.authenticate('google', { 
 
     if(req.isAuthenticated()){
         isAuthenticated = true
-        res.redirect('/sign-in-with-google-success')
+        user = req.user
+        res.redirect(store.MAIN_HOST_URL)
     }else{
         isAuthenticated = false
         res.redirect('/sign-in-with-google-failed')
     }  
-})
-
-router.get('/sign-in-with-google-success', (req,res) => {
-    if(isAuthenticated){
-
-        user = req.user
-        res.redirect(store.MAIN_HOST_URL)
-     } else{
-       res.json({
-            authenticated: false,
-            sattus: 'Failed',
-            message: 'isAuthenticated returned false'
-         })
-     }
 })
 
 router.get('/sign-in-with-google-failed', (req,res) => {
@@ -87,11 +72,11 @@ router.get('/sign-in-with-google-failed', (req,res) => {
     res.json(response)
 })
 
-router.post('/checkUserLoggedIn', (req, res) => {
+router.post('/fetchGoogleUserInfo', (req, res) => {
 
     console.log(user)
         
-        if(isAuthenticated){
+        if(user){
             res.json({
                 authenticated: true,
                 name: user.nickName,
@@ -99,18 +84,17 @@ router.post('/checkUserLoggedIn', (req, res) => {
             })
         } else{            
             res.json({
-                authenticated: false
+                authenticated: false,
+                user: null
             })
         }
 })
 
 router.get('/sign-out', (req, res) => {
 
-    isAuthenticated = false
     user = null
-    console.log('User', user)
     req.logOut()
-    res.json({ authenticated: isAuthenticated, user: user })
+    res.json({ authenticated: isAuthenticated, user: null })
 })
 
 router.post('/register', async  (req, res) => {

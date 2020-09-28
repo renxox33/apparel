@@ -24,15 +24,17 @@ class App extends React.Component {
     }
   }
 
-  // componentDidMount(){
-  //   axios.post('/checkUserLoggedIn').then(response => {
-  //     const { authenticated, name, id } = response.data
-  //     if(authenticated){
-  //       this.props.setCurrentUser({ name, id })
-  //     }
-  //   })
-  // }
-  
+  componentDidMount(){
+    
+      axios.post('/fetchGoogleUserInfo').then(response => {
+        const { authenticated, name, id } = response.data
+        if(authenticated){
+          this.props.setCurrentUser({ name, id })
+        }
+      })
+    
+  }
+
   render(){
 
     return (
@@ -53,7 +55,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    googleUser: state.user.googleUser
   }
 }
 
