@@ -23,9 +23,7 @@ db.once('open', () => console.log('Connected to mongo db'))
 passportStrategy.localStrategyInit(passport)
 passportStrategy.googleStrategyInit(passport)
 
-router.post('/sign-in-with-email', passport.authenticate('local', { failureRedirect: '/sign-in-with-email-failed' }), (req, res) => {
-    
-    console.log(req)
+router.post('/sign-in-with-email', passport.authenticate('local'), (req, res) => {
 
     if(req.isAuthenticated()){
         isAuthenticated = true
@@ -39,38 +37,18 @@ router.post('/sign-in-with-email', passport.authenticate('local', { failureRedir
         }    
 
         res.json(response)
-
-        // res.redirect('/sign-in-with-email-success')
     }else{
+
         isAuthenticated = false
-        res.redirect('/sign-in-with-email-failed')
-    }
-})
-
-router.get('/sign-in-with-email-success', (req,res) => {
-
-    if(isAuthenticated){
-
-        user = req.user
-
+        user = null
         const response = {
-                authenticated: true,
-                status: 'Success',
-                name: user.nickName,
-                id: user._id
-            }    
-
+            authenticated: false,
+            status: 'Failed',
+            message: 'Wrong email/password entered'
+        }
+        
         res.json(response)
-     }
-})
-
-router.get('/sign-in-with-email-failed', (req,res) => {
-    const response = {
-        authenticated: false,
-        status: 'Failed',
-        message: 'Wrong email/password entered'
     }
-    res.json(response)
 })
 
 router.get('/sign-in-with-google', passport.authenticate('google', { scope: ['profile'] }))
@@ -110,6 +88,8 @@ router.get('/sign-in-with-google-failed', (req,res) => {
 })
 
 router.post('/checkUserLoggedIn', (req, res) => {
+
+    console.log(req)
         
         if(isAuthenticated){
             res.json({
