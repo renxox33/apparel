@@ -6,7 +6,9 @@ import './sign-out.css'
 class SignOutComponent extends React.Component {
 
     componentDidMount(){
-        const response = await axios.get('/sign-out')
+        axios.get('/sign-out').then(response => {
+            const response = response
+        })
  
         setTimeout(() => {
             window.open('/', '_self')
