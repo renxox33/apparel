@@ -24,10 +24,19 @@ passportStrategy.localStrategyInit(passport)
 passportStrategy.googleStrategyInit(passport)
 
 router.post('/sign-in-with-email', passport.authenticate('local', { failureRedirect: '/sign-in-with-email-failed' }), (req, res) => {
-    console.log(req.isAuthenticated())
     if(req.isAuthenticated()){
         isAuthenticated = true
-        res.redirect('/sign-in-with-email-success')
+
+        const response = {
+            authenticated: true,
+            status: 'Success',
+            name: user.nickName,
+            id: user._id
+        }    
+
+        res.json(response)
+
+        // res.redirect('/sign-in-with-email-success')
     }else{
         isAuthenticated = false
         res.redirect('/sign-in-with-email-failed')
@@ -35,8 +44,6 @@ router.post('/sign-in-with-email', passport.authenticate('local', { failureRedir
 })
 
 router.get('/sign-in-with-email-success', (req,res) => {
-
-    console.log(req)
 
     if(isAuthenticated){
 
