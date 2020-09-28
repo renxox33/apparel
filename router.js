@@ -27,6 +27,8 @@ router.post('/sign-in-with-email', passport.authenticate('local', { failureRedir
     if(req.isAuthenticated()){
         isAuthenticated = true
 
+        user = req.user
+
         const response = {
             authenticated: true,
             status: 'Success',
