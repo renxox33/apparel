@@ -27,6 +27,8 @@ router.post('/sign-in-with-email', passport.authenticate('local'), (req, res) =>
 
     if(req.isAuthenticated()){
 
+        user = req.user
+
         const response = {
             authenticated: true,
             status: 'Success',
