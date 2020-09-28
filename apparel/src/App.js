@@ -15,14 +15,24 @@ import CategoryComponent from './pages/category/CategoryComponent'
 
 class App extends React.Component {
   
-  componentDidMount(){
-    axios.post('/checkUserLoggedIn').then(response => {
-      const { authenticated, name, id } = response.data
-      if(authenticated){
-        this.props.setCurrentUser({ name, id })
-      }
-    })
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      currentUser: this.props.currentUser
+    }
   }
+
+  // componentDidMount(){
+  //   axios.post('/checkUserLoggedIn').then(response => {
+  //     const { authenticated, name, id } = response.data
+  //     if(authenticated){
+  //       this.props.setCurrentUser({ name, id })
+  //     }
+  //   })
+  // }
+  
   render(){
 
     return (

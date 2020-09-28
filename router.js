@@ -108,9 +108,9 @@ router.get('/sign-out', (req, res) => {
 
     isAuthenticated = false
     user = null
-    console.log(user, isAuthenticated)
+    console.log('User', user)
     req.logOut()
-    res.json({ authenticated: isAuthenticated })
+    res.json({ authenticated: isAuthenticated, user: user })
 })
 
 router.post('/register', async  (req, res) => {

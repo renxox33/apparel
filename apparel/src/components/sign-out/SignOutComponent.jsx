@@ -1,13 +1,16 @@
 import React from 'react'
 import axios from 'axios'
 
+import { connect } from 'react-redux'
+import { setCurrentUser } from '../../redux/user/Actions'
+
 import './sign-out.css'
 
 class SignOutComponent extends React.Component {
 
     componentDidMount(){
         axios.get('/sign-out').then(response => {
-            const resp = response
+            this.props.setCurrentUser(null)
         })
  
         setTimeout(() => {
@@ -24,4 +27,16 @@ class SignOutComponent extends React.Component {
     }
 }
 
-export default SignOutComponent
+const mapStateToProps = state => {
+    return{
+        currentUser: state.user.currentUser
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        setCurrentUser: user => dispatch(setCurrentUser(user))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignOutComponent)
