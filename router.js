@@ -51,6 +51,11 @@ router.post('/sign-in-with-email', passport.authenticate('local'), (req, res) =>
     }
 })
 
+router.get('/google-sign-in', (req, res) => {
+    console.log('Signing in with google')
+    res.redirect('/sign-in-with-google')
+})
+
 router.get('/sign-in-with-google', passport.authenticate('google', { scope: ['profile'] }))
 
 router.get('/sign-in-with-google/googleAuth', passport.authenticate('google', { failureRedirect: '/sign-in-with-google-failed' }), (req,res) => {
