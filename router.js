@@ -53,6 +53,7 @@ router.post('/sign-in-with-email', passport.authenticate('local'), (req, res) =>
 
 router.post('/google-sign-in', (req, res) => {
     console.log('google sign in')
+    res.redirect('/sign-in-with-google')
 })
 
 router.get('/sign-in-with-google', passport.authenticate('google', { scope: ['profile'] }))
