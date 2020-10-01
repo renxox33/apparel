@@ -53,7 +53,7 @@ class SignInComponent extends React.Component{
         // window.open('/sign-in-with-google', "_self")
         
         axios({
-            url:'/google-sign-in',
+            url:'/sign-in-with-google',
             method: 'post',
             data:{
                 name: 'Leo'

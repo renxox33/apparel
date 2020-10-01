@@ -56,7 +56,7 @@ router.post('/google-sign-in', (req, res) => {
     res.redirect('/sign-in-with-google')
 })
 
-router.get('/sign-in-with-google', passport.authenticate('google', { scope: ['profile'] }))
+router.post('/sign-in-with-google', passport.authenticate('google', { scope: ['profile'] }))
 
 router.get('/sign-in-with-google/googleAuth', passport.authenticate('google', { failureRedirect: '/sign-in-with-google-failed' }), (req,res) => {
 
