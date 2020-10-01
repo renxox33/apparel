@@ -50,10 +50,7 @@ class SignInComponent extends React.Component{
 
     handleGoogleSignIn = e => {
 
-        // window.open('/sign-in-with-google', "_self")
-        axios.get('/ign-in-with-google').then(response => {
-            console.log(response.data)
-        })
+        window.open('/sign-in-with-google', "_self")
     }
 
     render(){
