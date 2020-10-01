@@ -36,6 +36,7 @@ class HeaderComponent extends React.Component {
                         CONTACT
                     </Link>
                     <ShoppingCartComponent />
+                    <a href="/sign-in-with-google">Google</a>
                 </div>
                 {this.props.hidden ? null : <ShoppingCartDropdown />}
             </div>
