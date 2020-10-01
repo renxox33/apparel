@@ -51,6 +51,8 @@ class SignInComponent extends React.Component{
     handleGoogleSignIn = e => {
 
         window.open('/sign-in-with-google', "_self")
+
+        // window.open('/google-sign-in', "_self")
     }
 
     render(){

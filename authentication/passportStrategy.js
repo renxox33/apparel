@@ -48,7 +48,8 @@ module.exports.googleStrategyInit = (passport) => {
     passport.use( new GoogleStrategy({
         clientID: store.CLI_ID,
         clientSecret: store.CLI_SEC,
-        callbackURL: store.SERVER_URL + '/sign-in-with-google/googleAuth'
+        callbackURL: store.SERVER_URL + '/sign-in-with-google/googleAuth',
+        proxy: true
     }, (accessToken, refreshToken, profile, done) => {
         User.findOne({ googleId: profile.id }, async (err, existingUser) => {
             if(err){
