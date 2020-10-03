@@ -1,18 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import ShopDataContext from '../../context/shopDataContext'
 import CollectionItem from '../../components/collection-item/CollectionItemComponent'
 
 import './category.scss'
 
 class CategoryComponent extends React.Component {
 
-    static contextType = ShopDataContext
-
     render(){
         const {category} = this.props.match.params
-        const categoryItems = this.context[category].items
+        const categoryItems = this.props.inventoryItems[category].items
 
         return(
             <div className='category-collection'>
@@ -35,5 +33,11 @@ class CategoryComponent extends React.Component {
     }
 }
 
+const mapStateToProps = ({ inventory }) => {
+    return{
+        inventoryItems: inventory.inventory
+    }
+}
 
-export default withRouter(CategoryComponent)
+
+export default connect(mapStateToProps)(withRouter(CategoryComponent))

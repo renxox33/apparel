@@ -38,7 +38,6 @@ class App extends React.Component {
     
     const response = await axios.get('/fetch-shop-items')
     this.props.setInventory(response.data.item)
-    console.log(response.data.item)
   }
 
   componentDidMount(){

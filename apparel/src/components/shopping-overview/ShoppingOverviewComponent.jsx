@@ -1,23 +1,34 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import CollectionPreviewComponent from '../collection-preview/CollectionPreviewComponent'
-import ShopDataContext from '../../context/shopDataContext'
 
 class ShoppingOverviewComponent extends React.Component{
-
-    static contextType = ShopDataContext
    
     render(){
         return(
+            
             <div className='shopping-overview'>
-                { Object.keys(this.context).map( categoryId => {
-                        const category = this.context[categoryId]
-                        return <CollectionPreviewComponent key={category.id} title={category.title} items={category.items} route={category.routeName} />
-                } ) }
+                {
+                    this.props.inventoryItems ? 
+                    Object.keys(this.props.inventoryItems).map((inventoryItemCategory, index) => {
+                        if(index !== 0){
+                            const category = this.props.inventoryItems[inventoryItemCategory]
+                            return <CollectionPreviewComponent key={category.id} title={category.title} items={category.items} route={category.routeName} />
+                        }
+                        
+                    }) : null
+                }
             </div>
         )
     }
     
 }
 
-export default (ShoppingOverviewComponent)
+const mapStateToProps = (state) => {
+    return{
+        inventoryItems: state.inventory.inventory
+    }
+}
+
+export default connect(mapStateToProps)(ShoppingOverviewComponent)
