@@ -11,6 +11,7 @@ import SignInSignUp from './pages/sign-in-up/SignInUp'
 import SignOutComponent from './components/sign-out/SignOutComponent'
 import CheckoutComponent from './pages/checkout/CheckoutComponent'
 import { setCurrentUser } from './redux/user/Actions'
+import loadInventory from './redux/inventory/Actions'
 import CategoryComponent from './pages/category/CategoryComponent'
 
 class App extends React.Component {
@@ -24,14 +25,26 @@ class App extends React.Component {
     }
   }
 
+  checkUserLoggedIn = () => {
+    axios.post('/fetchGoogleUserInfo').then(response => {
+      const { authenticated, name, id } = response.data
+      if(authenticated){
+        this.props.setCurrentUser({ name, id })
+      }
+    })
+  }
+
+  fetchInventoryItems = async  () => {
+    
+    const response = await axios.get('/fetch-shop-items')
+    this.props.setInventory(response.data.item)
+    console.log(response.data.item)
+  }
+
   componentDidMount(){
     
-      axios.post('/fetchGoogleUserInfo').then(response => {
-        const { authenticated, name, id } = response.data
-        if(authenticated){
-          this.props.setCurrentUser({ name, id })
-        }
-      })
+    this.checkUserLoggedIn()
+    this.fetchInventoryItems()
     
   }
 
@@ -64,7 +77,8 @@ const mapDispatchToProps = dispatch => {
   return {
       setCurrentUser: user => {
           return dispatch(setCurrentUser(user))
-      }
+      },
+      setInventory: item => dispatch(loadInventory(item))
   }
 }
 

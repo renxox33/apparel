@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const User = require('./models/User')
 const bcrypt = require('bcrypt')
 const store = require('./store/store')
+const ShopItems = require('./models/ShopItems')
 
 const passportStrategy = require('./authentication/passportStrategy')
 
@@ -129,6 +130,17 @@ router.post('/register', async  (req, res) => {
         }catch(error){
             console.log(error.message)
         }
+    }
+})
+
+router.get('/fetch-shop-items', async (req, res) => {
+
+    try {
+        
+        const items = await ShopItems.findOne()
+        res.json({ item: items })
+    } catch (error) {
+        console.log(error)
     }
 })
 
