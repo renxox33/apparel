@@ -5,49 +5,58 @@ import { removeItemFromCart } from '../../redux/cart/Actions'
 import CheckoutItemComponent from '../../components/checkout-item/CheckoutItemComponent'
 import PaymentButtonComponent from '../../components/payment-button/PaymentButtonComponent'
 
+import saveCartItems from '../../utilities/saveCartItemsToDb'
+
 
 import './checkout.scss'
 
-const CheckoutComponent = (props) => {
+class CheckoutComponent extends React.Component {
 
-    return(
-        <div className='checkout-page'>
-            {props.cartItems.length > 0 ?
-                <div className='abc'>
-                    <div className='checkout-header'>
-                        <div className='header-title'>
-                            <span>Product</span>
+    componentDidUpdate(){
+        console.log('Updated')
+        saveCartItems(this.props.cartItems, this.props.user)
+    }
+
+    render(){
+        return(
+            <div className='checkout-page'>
+                {this.props.cartItems.length > 0 ?
+                    <div className='abc'>
+                        <div className='checkout-header'>
+                            <div className='header-title'>
+                                <span>Product</span>
+                            </div>
+                            <div className='header-title'>
+                                <span>Description</span>
+                            </div>
+                            <div className='header-title'>
+                                <span>Quantity</span>
+                            </div>
+                            <div className='header-title'>
+                                <span>Price</span>
+                            </div>
+                            <div className='header-title'>
+                                <span>Remove</span>
+                            </div>
                         </div>
-                        <div className='header-title'>
-                            <span>Description</span>
+                        
+                        { this.props.cartItems.map(item => <CheckoutItemComponent key={item.id} item={item} />)}
+                        
+                        
+                        <div className='total'>
+                            Total : {this.props.totalPrice}
                         </div>
-                        <div className='header-title'>
-                            <span>Quantity</span>
-                        </div>
-                        <div className='header-title'>
-                            <span>Price</span>
-                        </div>
-                        <div className='header-title'>
-                            <span>Remove</span>
-                        </div>
+                        <PaymentButtonComponent price={this.props.totalPrice} />
+                    </div> : 
+                    <div>
+                        <hr/>
+                        <h3>Your cart is empty.</h3>
                     </div>
                     
-                    { props.cartItems.map(item => <CheckoutItemComponent key={item.id} item={item} />)}
-                    
-                    
-                    <div className='total'>
-                        Total : {props.totalPrice}
-                    </div>
-                    <PaymentButtonComponent price={props.totalPrice} />
-                </div> : 
-                <div>
-                    <hr/>
-                    <h3>Your cart is empty.</h3>
-                </div>
-                
-            }
-        </div>
-    )
+                }
+            </div>
+        )
+    }  
 }
 
 const mapStateToProps = state => {
@@ -55,7 +64,8 @@ const mapStateToProps = state => {
         cartItems: state.cart.cart,
         totalPrice: state.cart.cart.reduce((accumulator, item) => {
             return accumulator + item.price*item.quantity
-        }, 0)
+        }, 0),
+        user: state.user.currentUser
     }
 }
 

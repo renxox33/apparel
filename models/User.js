@@ -13,7 +13,8 @@ const ca_reg_user = new mongoose.Schema({
     },
     googleId: {
         type:Number
-    }
+    },
+    cart: [Object]
 })
 
 ca_reg_user.plugin(passportLocalMongoose)

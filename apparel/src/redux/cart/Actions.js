@@ -26,3 +26,10 @@ export const decreaseItemQuantityfromCart = item => {
         payload: item
     }
 }
+
+export const loadUsersSavedCart = cart => {
+    return{
+        type: cartActionTypes.LOAD_USERS_SAVED_CART,
+        payload: cart
+    }
+}

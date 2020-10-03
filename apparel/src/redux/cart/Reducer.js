@@ -43,6 +43,13 @@ const cartReducer = (state, action) => {
             }
         }
 
+        case cartActionTypes.LOAD_USERS_SAVED_CART: {
+            return{
+                ...state,
+                cart: action.payload
+            }
+        }
+
         default: return state
     }
 }

@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './sign-in.css'
 import axios from 'axios'
 import { setCurrentUser } from '../../redux/user/Actions'
+import { loadUsersSavedCart } from '../../redux/cart/Actions'
 import { connect } from 'react-redux'
 
 class SignInComponent extends React.Component{
@@ -30,10 +31,11 @@ class SignInComponent extends React.Component{
                 password: this.state.password
             }
         }).then(response => {
-            const { authenticated, status, name, id } = response.data
+            const { authenticated, status, name, id, cart } = response.data
             if(authenticated && status === 'Success'){
                 const authenticatedUser = { name, id }
                 this.props.setCurrentUser(authenticatedUser)
+                this.props.loadUsersSavedCart(cart)
             }else{
                 const errorMsg = response.data.message
                 document.getElementById('sign-in-error').innerText = errorMsg
@@ -76,9 +78,8 @@ class SignInComponent extends React.Component{
 
 const mapDispatchToProps = dispatch => {
     return {
-        setCurrentUser: user => {
-            return dispatch(setCurrentUser(user))
-        }
+        setCurrentUser: user =>  dispatch(setCurrentUser(user)),
+        loadUsersSavedCart: cart => dispatch(loadUsersSavedCart(cart))
     }
 }
 

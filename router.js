@@ -34,7 +34,8 @@ router.post('/sign-in-with-email', passport.authenticate('local'), (req, res) =>
             authenticated: true,
             status: 'Success',
             name: req.user.nickName,
-            id: req.user._id
+            id: req.user._id,
+            cart: req.user.cart
         }    
 
         res.json(response)
@@ -141,6 +142,26 @@ router.get('/fetch-shop-items', async (req, res) => {
         res.json({ item: items })
     } catch (error) {
         console.log(error)
+    }
+})
+
+router.post('/save-cart-to-db', async (req, res) => {
+
+    const { user, cartItems } = req.body
+
+    //if user is signed in, push cart to db, else do nothing
+    if(user !== null){
+        try {        
+            const userToUpdate = await User.findOneAndUpdate({ _id: user.id }, { cart: cartItems }, { useFindAndModify: false } )
+            if(userToUpdate){
+                res.status(200).json({ message: 'success' })
+            }else{
+                res.status(500).json({ message: 'Error occurred while saving cart' })
+            }
+
+        } catch (error) {
+            res.status(500).json({ message: error.message })
+        }
     }
 })
 

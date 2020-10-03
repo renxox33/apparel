@@ -68,7 +68,8 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     currentUser: state.user.currentUser,
-    googleUser: state.user.googleUser
+    googleUser: state.user.googleUser,
+    inventoryItems: state.inventory.inventory
   }
 }
 
