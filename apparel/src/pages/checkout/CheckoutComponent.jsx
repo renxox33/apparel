@@ -5,17 +5,10 @@ import { removeItemFromCart } from '../../redux/cart/Actions'
 import CheckoutItemComponent from '../../components/checkout-item/CheckoutItemComponent'
 import PaymentButtonComponent from '../../components/payment-button/PaymentButtonComponent'
 
-import saveCartItems from '../../utilities/saveCartItemsToDb'
-
 
 import './checkout.scss'
 
 class CheckoutComponent extends React.Component {
-
-    componentDidUpdate(){
-        console.log('Updated')
-        saveCartItems(this.props.cartItems, this.props.user)
-    }
 
     render(){
         return(
@@ -64,8 +57,7 @@ const mapStateToProps = state => {
         cartItems: state.cart.cart,
         totalPrice: state.cart.cart.reduce((accumulator, item) => {
             return accumulator + item.price*item.quantity
-        }, 0),
-        user: state.user.currentUser
+        }, 0)
     }
 }
 

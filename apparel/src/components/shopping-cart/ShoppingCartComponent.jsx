@@ -1,19 +1,27 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
 import {ReactComponent as ShoppingBag} from '../../resources/shopping-cart-icon/shopping-bag.svg'
 import {setCartHiddenValue} from '../../redux/cart/Actions'
-import {connect} from 'react-redux'
+import saveCartToDb from '../../utilities/saveCartItemsToDb'
+
 import './shopping-cart.scss'
 
 
-const ShoppingCartComponent = (props) => {
+class ShoppingCartComponent extends React.Component {
 
-    return(
-        <div className='cart-icon' onClick={props.setCartHiddenValue}>
-            <ShoppingBag className='shopping-icon'/>
-            <span className='item-count'>{props.numberOfItemsInCart}</span>
-        </div>
-    )
+    componentDidUpdate(){
+        saveCartToDb(this.props.cart, this.props.currentUser)
+    }
+
+    render(){
+        return(
+            <div className='cart-icon' onClick={this.props.setCartHiddenValue}>
+                <ShoppingBag className='shopping-icon'/>
+                <span className='item-count'>{this.props.numberOfItemsInCart}</span>
+            </div>
+        )
+    }  
 }
 
 const mapDispatchToProps = dispatch => {
@@ -24,7 +32,9 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        numberOfItemsInCart: state.cart.cart.reduce((accumulator, cartItem) => accumulator + cartItem.quantity, 0 )
+        numberOfItemsInCart: state.cart.cart.reduce((accumulator, cartItem) => accumulator + cartItem.quantity, 0 ),
+        currentUser: state.user.currentUser,
+        cart: state.cart.cart
     }
 }
 

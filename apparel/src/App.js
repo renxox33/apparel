@@ -12,6 +12,7 @@ import SignOutComponent from './components/sign-out/SignOutComponent'
 import CheckoutComponent from './pages/checkout/CheckoutComponent'
 import { setCurrentUser } from './redux/user/Actions'
 import loadInventory from './redux/inventory/Actions'
+import { loadUsersSavedCart } from './redux/cart/Actions'
 import CategoryComponent from './pages/category/CategoryComponent'
 
 class App extends React.Component {
@@ -30,21 +31,32 @@ class App extends React.Component {
       const { authenticated, name, id } = response.data
       if(authenticated){
         this.props.setCurrentUser({ name, id })
+
       }
     })
   }
 
-  fetchInventoryItems = async  () => {
+  fetchInventoryItems = async () => {
     
     const response = await axios.get('/fetch-shop-items')
     this.props.setInventory(response.data.item)
+  }
+
+  fetchCartItems = async () => {
+    const data = { user: this.props.currentUser }
+    const response = await axios({
+      method: 'post',
+      url: '/fetch-cart-items',
+      data: data
+    })
+    this.props.loadCart(response.data.cart)
   }
 
   componentDidMount(){
     
     this.checkUserLoggedIn()
     this.fetchInventoryItems()
-    
+    this.fetchCartItems()
   }
 
   render(){
@@ -78,7 +90,8 @@ const mapDispatchToProps = dispatch => {
       setCurrentUser: user => {
           return dispatch(setCurrentUser(user))
       },
-      setInventory: item => dispatch(loadInventory(item))
+      setInventory: item => dispatch(loadInventory(item)),
+      loadCart: cart => dispatch(loadUsersSavedCart(cart))
   }
 }
 

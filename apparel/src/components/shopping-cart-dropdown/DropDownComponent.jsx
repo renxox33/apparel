@@ -6,7 +6,6 @@ import {withRouter} from 'react-router-dom'
 
 import CartItemComponent from '../cart-item/CartItemComponent'
 import { setCartHiddenValue } from '../../redux/cart/Actions'
-import saveCartitems from '../../utilities/saveCartItemsToDb'
 
 import './dropdown.scss'
 
@@ -25,7 +24,7 @@ const ShoppingCartDropdown = (props) => {
             </div>
             <Button variant='dark' onClick={
                 () => {
-                saveCartitems(props.cartItems, props.user)
+               
                 props.history.push('/checkout')
                 props.toggleHidden()
                 }
@@ -36,8 +35,7 @@ const ShoppingCartDropdown = (props) => {
 
 const mapStateToProps = state => {
     return {
-        cartItems: state.cart.cart,
-        user: state.user.currentUser
+        cartItems: state.cart.cart
     }
 }
 
