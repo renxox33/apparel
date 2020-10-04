@@ -82,7 +82,8 @@ router.post('/fetchGoogleUserInfo', (req, res) => {
             res.json({
                 authenticated: true,
                 name: user.nickName,
-                id: user._id
+                id: user._id,
+                cart: user.cart
             })
         } else{            
             res.json({
@@ -150,7 +151,7 @@ router.post('/save-cart-to-db', async (req, res) => {
     const { user, cartItems } = req.body
 
     //if user is signed in, push cart to db, else do nothing
-    if(user !== null){
+    if(user !== null && user!== undefined){
         try {        
             const userToUpdate = await User.findOneAndUpdate({ _id: user.id }, { cart: cartItems }, { useFindAndModify: false } )
             if(userToUpdate){
@@ -160,9 +161,18 @@ router.post('/save-cart-to-db', async (req, res) => {
             }
 
         } catch (error) {
+            console.log(error)
             res.status(500).json({ message: error.message })
         }
     }
+})
+
+router.post('/fetch-cart-items', async (req, res) => {
+    const user = req.user
+    if(user !== null && user !== undefined){
+        const foundUser = await User.findOne({ _id: user._id })
+        res.json({ cart: foundUser.cart })
+    } 
 })
 
 module.exports = router
