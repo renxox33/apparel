@@ -9,15 +9,17 @@ import './category.scss'
 class CategoryComponent extends React.Component {
 
     render(){
+
         const {category} = this.props.match.params
-        const categoryItems = this.props.inventoryItems[category].items
+        
 
         return(
             <div className='category-collection'>
                  <h1 className='title'>{category.toUpperCase()}</h1>
                  <div className='item-display'>
                     {
-                        categoryItems.map(item => <CollectionItem
+                        this.props.inventoryItems!==null ? 
+                        this.props.inventoryItems[category].items.map(item => <CollectionItem
                                                     className='collection-item'
                                                     key={item.id} 
                                                     id={item.id}
@@ -25,9 +27,9 @@ class CategoryComponent extends React.Component {
                                                     price={item.price}
                                                     linkUrl={item.imageUrl}
                                                     />)
+                        : <h1 className='loading-message'>LOADING</h1>
                     }
-                 </div>
-                
+                 </div>  
             </div>
         )
     }

@@ -26,7 +26,6 @@ const CheckoutItemComponent = props => {
             </span>
             <div className='remove-button' onClick={() => props.removeItemFromCart(item)}>
                 &#10008;
-                {/* <Button variant='dark' onClick={() => props.removeItemFromCart(item)}>X</Button> */}
             </div>
         </div>
     )
